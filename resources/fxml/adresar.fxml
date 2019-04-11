@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rs.zadaca2.OsobaController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <SplitPane dividerPositions="0.29797979797979796" layoutX="149.0" layoutY="88.0" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -63,7 +63,6 @@
                   <ButtonBar layoutX="146.0" layoutY="244.0" prefHeight="40.0" prefWidth="273.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
                     <buttons>
                       <Button mnemonicParsing="false" onAction="#dodajOsobu" text="Dodaj" />
-                        <Button mnemonicParsing="false" onAction="#promjeniOsobu" prefHeight="27.0" prefWidth="81.0" text="Promjeni" />
                         <Button mnemonicParsing="false" onAction="#obrisiOsobu" text="Obrisi" />
                     </buttons>
                   </ButtonBar>

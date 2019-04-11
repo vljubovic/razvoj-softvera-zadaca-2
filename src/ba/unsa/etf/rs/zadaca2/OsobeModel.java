@@ -11,7 +11,7 @@ public class OsobeModel {
     public OsobeModel() {
     }
 
-    public void napuni(){
+    public void napuni() {
         osobe.add(new Osoba("Semso", "Semsic"));
         osobe.add(new Osoba("Hamo", "Hamic"));
         osobe.add(new Osoba("Nedo", "Nedic"));

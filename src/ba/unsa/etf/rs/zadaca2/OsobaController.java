@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.converter.LocalDateStringConverter;
 import javafx.util.converter.NumberStringConverter;
 
 public class OsobaController {
@@ -29,60 +30,49 @@ public class OsobaController {
     @FXML
     public void initialize() {
         // Inicijaliziraj tabelu osoba sa dvije kolone
-        imeKolona.setCellFactory(new PropertyValueFactory("ime"));
-        prezimeKolona.setCellFactory(new PropertyValueFactory("prezime"));
 
-        //imeKolona.setCellValueFactory(cellData -> cellData.getValue().imeProperty());
-        //prezimeKolona.setCellValueFactory(cellData -> cellData.getValue().prezimeProperty());
-
-        // Ocisti detalje o osobi
-        //prikaziOsobu(null);
-
-        // Prikazi detalje o osobi koja je selektovana u tabeli
-        //osobaTabela.getSelectionModel().selectedItemProperty().addListener(
-        //        (observable, oldValue, newValue) -> prikaziOsobu(newValue));
+        imeKolona.setCellValueFactory(cellData -> cellData.getValue().imeProperty());
+        prezimeKolona.setCellValueFactory(cellData -> cellData.getValue().prezimeProperty());
+        osobaTabela.setItems(model.getOsobe());
 
         osobaTabela.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Osoba>(){
             @Override
-            public void changed(ObservableValue<? extends Osoba> observableValue, Osoba osoba, Osoba t1) {
-                model.setTrenutnaOsoba(t1);
-                imeText.textProperty().bindBidirectional(model.getTrenutnaOsoba().imeProperty());
-                prezimeText.textProperty().bindBidirectional(model.getTrenutnaOsoba().prezimeProperty());
-                ulicaText.textProperty().bindBidirectional(model.getTrenutnaOsoba().ulicaProperty());
-                gradText.textProperty().bindBidirectional(model.getTrenutnaOsoba().gradProperty());
-                postanskiBrojText.textProperty().bindBidirectional(model.getTrenutnaOsoba().postanskiBrojProperty(), new NumberStringConverter());
+            public void changed(ObservableValue<? extends Osoba> observableValue, Osoba osobaOld, Osoba osobaNew) {
+                model.setTrenutnaOsoba(osobaNew);
+                osobaTabela.refresh();
+            }
+            });
+
+        model.trenutnaOsoba().addListener((obs, oldOsoba, newOsoba) -> {
+            if (oldOsoba != null) {
+                imeText.textProperty().unbindBidirectional(oldOsoba.imeProperty() );
+                prezimeText.textProperty().unbindBidirectional(oldOsoba.prezimeProperty() );
+                ulicaText.textProperty().unbindBidirectional(oldOsoba.ulicaProperty() );
+                gradText.textProperty().unbindBidirectional(oldOsoba.gradProperty() );
+                postanskiBrojText.textProperty().unbindBidirectional(oldOsoba.postanskiBrojProperty() );
+                rodjendanText.textProperty().unbindBidirectional(oldOsoba.rodjendanProperty() );
+            }
+            if (newOsoba == null) {
+                imeText.setText("");
+                prezimeText.setText("");
+                ulicaText.setText("");
+                gradText.setText("");
+                postanskiBrojText.setText("");
+                rodjendanText.setText("");
+            }
+            else {
+                imeText.textProperty().bindBidirectional(newOsoba.imeProperty() );
+                prezimeText.textProperty().bindBidirectional(newOsoba.prezimeProperty() );
+                ulicaText.textProperty().bindBidirectional(newOsoba.ulicaProperty() );
+                gradText.textProperty().bindBidirectional(newOsoba.gradProperty() );
+                postanskiBrojText.textProperty().bindBidirectional(newOsoba.postanskiBrojProperty(), new NumberStringConverter());
+                rodjendanText.textProperty().bindBidirectional(newOsoba.rodjendanProperty(), new LocalDateStringConverter() );
             }
         });
 
-        imeText.textProperty().bindBidirectional(model.getTrenutnaOsoba().imeProperty());
-        prezimeText.textProperty().bindBidirectional(model.getTrenutnaOsoba().prezimeProperty());
-        ulicaText.textProperty().bindBidirectional(model.getTrenutnaOsoba().ulicaProperty());
-        gradText.textProperty().bindBidirectional(model.getTrenutnaOsoba().gradProperty());
-        postanskiBrojText.textProperty().bindBidirectional(model.getTrenutnaOsoba().postanskiBrojProperty(), new NumberStringConverter());
+
 
     }
-
-
-/*    private void prikaziOsobu(Osoba osoba) {
-        if (osoba != null) {
-            // Ispuni textFields sa vrijednostima iz modela
-            imeText.setText(osoba.getIme());
-            prezimeText.setText(osoba.getPrezime());
-            ulicaText.setText(osoba.getUlica());
-            postanskiBrojText.setText(Integer.toString(osoba.getPostanskiBroj()));
-            gradText.setText(osoba.getGrad());
-            rodjendanText.setText(DateUtil.format(osoba.getRodjendan()));
-
-        } else {
-            // Osoba je null, izbrisi sav tekst
-            imeText.setText("");
-            prezimeText.setText("");
-            ulicaText.setText("");
-            postanskiBrojText.setText("");
-            gradText.setText("");
-            rodjendanText.setText("");
-        }
-    }*/
 
 
     public void obrisiOsobu(ActionEvent actionEvent) {
@@ -104,9 +94,18 @@ public class OsobaController {
 
 
     public void dodajOsobu(ActionEvent actionEvent) {
-        model.getOsobe().add(model.getTrenutnaOsoba());
-        //model.setTrenutniKorisnik(model.getKorisnici().get(model.getKorisnici().size()-1));
+        Osoba novaOsoba = new Osoba();
+        model.getOsobe().add(novaOsoba);
         osobaTabela.getSelectionModel().selectLast();
+        osobaTabela.refresh();
+
+        /*Osoba novaOsoba = new Osoba("","");
+        model.getOsobe().add(novaOsoba);
+        model.setTrenutnaOsoba(novaOsoba);
+        osobaTabela.getSelectionModel().select(novaOsoba);*/
+
+        //model.setTrenutnaOsoba(model.getOsobe().get(model.getOsobe().size()-1));
+        //osobaTabela.getSelectionModel().selectLast();
 
         /*Osoba tempOsoba = new Osoba();
         if (isInputValid()) {
@@ -120,11 +119,10 @@ public class OsobaController {
         }
         model.getOsobe().add(tempOsoba);*/
     }
-
-    @FXML
+    /*@FXML
     private void promjeniOsobu(ActionEvent actionEvent) {
 
-        /*Osoba odabranaOsoba = osobaTabela.getSelectionModel().getSelectedItem();
+        Osoba odabranaOsoba = osobaTabela.getSelectionModel().getSelectedItem();
         if (odabranaOsoba != null) {
             if (isInputValid()) {
                 odabranaOsoba.setIme(imeText.getText());
@@ -144,8 +142,8 @@ public class OsobaController {
             alert.setContentText("Odaberite osobu koju zelite izbrisati!");
 
             alert.showAndWait();
-        }*/
-    }
+        }
+    }*/
 
     private boolean isInputValid() {
         String errorMessage = "";
