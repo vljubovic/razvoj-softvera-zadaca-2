@@ -78,18 +78,7 @@ public class OsobaController {
     public void obrisiOsobu(ActionEvent actionEvent) {
         int selectedIndex = osobaTabela.getSelectionModel().getSelectedIndex();
         osobaTabela.getItems().remove(selectedIndex);
-        /*if (selectedIndex >= 0) {
-            osobaTabela.getItems().remove(selectedIndex);
-        } else {
-            // Nothing selected.
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("Greska");
-            alert.setHeaderText("Niste izabrali ni jednu osobu iz tabele!");
-            alert.setContentText("Odaberite osobu koju zelite izbrisati!");
 
-            alert.showAndWait();
-        }*/
     }
 
 
@@ -98,107 +87,7 @@ public class OsobaController {
         model.getOsobe().add(novaOsoba);
         osobaTabela.getSelectionModel().selectLast();
         osobaTabela.refresh();
-
-        /*Osoba novaOsoba = new Osoba("","");
-        model.getOsobe().add(novaOsoba);
-        model.setTrenutnaOsoba(novaOsoba);
-        osobaTabela.getSelectionModel().select(novaOsoba);*/
-
-        //model.setTrenutnaOsoba(model.getOsobe().get(model.getOsobe().size()-1));
-        //osobaTabela.getSelectionModel().selectLast();
-
-        /*Osoba tempOsoba = new Osoba();
-        if (isInputValid()) {
-            tempOsoba.setIme(imeText.getText());
-            tempOsoba.setPrezime(prezimeText.getText());
-            tempOsoba.setUlica(ulicaText.getText());
-            tempOsoba.setPostanskiBroj(Integer.parseInt(postanskiBrojText.getText()));
-            tempOsoba.setGrad(gradText.getText());
-            tempOsoba.setRodjendan(DateUtil.parse(rodjendanText.getText()));
-
-        }
-        model.getOsobe().add(tempOsoba);*/
     }
-    /*@FXML
-    private void promjeniOsobu(ActionEvent actionEvent) {
-
-        Osoba odabranaOsoba = osobaTabela.getSelectionModel().getSelectedItem();
-        if (odabranaOsoba != null) {
-            if (isInputValid()) {
-                odabranaOsoba.setIme(imeText.getText());
-                odabranaOsoba.setPrezime(prezimeText.getText());
-                odabranaOsoba.setUlica(ulicaText.getText());
-                odabranaOsoba.setPostanskiBroj(Integer.parseInt(postanskiBrojText.getText()));
-                odabranaOsoba.setGrad(gradText.getText());
-                odabranaOsoba.setRodjendan(DateUtil.parse(rodjendanText.getText()));
-
-            }
-        } else {
-            // Nothing selected.
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("Greska");
-            alert.setHeaderText("Niste izabrali ni jednu osobu iz tabele!");
-            alert.setContentText("Odaberite osobu koju zelite izbrisati!");
-
-            alert.showAndWait();
-        }
-    }*/
-
-    private boolean isInputValid() {
-        String errorMessage = "";
-
-        if (imeText.getText() == null || imeText.getText().length() == 0) {
-            errorMessage += "Vrijednost za ime nije ispravna!\n";
-        }
-        if (prezimeText.getText() == null || prezimeText.getText().length() == 0) {
-            errorMessage += "Vrijednost za prezime nije ispravna!\n";
-        }
-        if (ulicaText.getText() == null || ulicaText.getText().length() == 0) {
-            errorMessage += "Vrijednost za ulicu nije ispravna!\n";
-        }
-
-        if (postanskiBrojText.getText() == null || postanskiBrojText.getText().length() == 0) {
-            errorMessage += "Vrijednost za postanski broj nije ispravna!\n";
-        } else {
-            // pokusaj parsirati vrijednost postanskiBroj u int
-            try {
-                Integer.parseInt(postanskiBrojText.getText());
-            } catch (NumberFormatException e) {
-                errorMessage += "Postanski broj mora biti integer!\n";
-            }
-        }
-
-        if (gradText.getText() == null || gradText.getText().length() == 0) {
-            errorMessage += "Vrijednost za grad nije ispravna!\n";
-        }
-
-        if (rodjendanText.getText() == null || rodjendanText.getText().length() == 0) {
-            errorMessage += "Vrijednost za rodjendan nije ispravna!\n";
-        } else {
-            if (!DateUtil.validDate(rodjendanText.getText())) {
-                errorMessage += "Za rodjendan koristite format dd.mm.yyyy!\n";
-            }
-        }
-
-        /*if (errorMessage.length() == 0) {
-            return true;
-        } else {
-            // Prikazi poruku
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("neispravan unos");
-            alert.setHeaderText("Ispravite neispravan unos!");
-            alert.setContentText(errorMessage);
-
-            alert.showAndWait();
-
-            return false;
-        }*/
-        return true;
-    }
-
-
 
 
 }
