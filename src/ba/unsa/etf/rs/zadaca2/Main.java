@@ -23,8 +23,6 @@ public class Main extends Application {
         loader.setController(ctrl);
         Parent root = loader.load();
 
-        //AnchorPane osobaOverview = (AnchorPane) loader.load();
-        //Scene scene = new Scene(osobaOverview);
         primaryStage.setScene(new Scene(root, 600, 300));
         primaryStage.setTitle("Adresar");
         primaryStage.show();
