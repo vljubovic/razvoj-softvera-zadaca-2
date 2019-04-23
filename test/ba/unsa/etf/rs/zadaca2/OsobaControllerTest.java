@@ -138,7 +138,9 @@ class OsobaControllerTest {
 
     @Test
     void formatBroja(FxRobot robot) {
-        robot.clickOn("#postanskiBrojText").write("7845");
+        robot.clickOn("#postanskiBrojText");
+        robot.press(KeyCode.CONTROL).press(KeyCode.A).release(KeyCode.A).release(KeyCode.CONTROL);
+        robot.write("7845");
 
         TextField postanskiBroj = robot.lookup("#postanskiBrojText").queryAs(TextField.class);
         assertEquals("7845", postanskiBroj.getText());
